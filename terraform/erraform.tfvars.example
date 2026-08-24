@@ -1,0 +1,22 @@
+aws_region = "ap-south-1"
+
+project_name = "spoke-vpc"
+
+environment = "dev"
+
+vpc_cidr = "10.20.0.0/16"
+
+private_subnet_a_cidr = "10.20.1.0/24"
+
+private_subnet_b_cidr = "10.20.2.0/24"
+
+availability_zone_a = "ap-south-1a"
+
+availability_zone_b = "ap-south-1b"
+
+github_org = "YOUR_GITHUB_USERNAME"
+
+github_repository = "aws-spoke-vpc"
+
+github_branch = "main"
+  
