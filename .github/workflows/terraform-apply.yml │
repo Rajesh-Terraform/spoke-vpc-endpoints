@@ -37,14 +37,14 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
-        run: terraform init -input=false
+        run: terraform init 
 
       - name: Terraform Validate
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -input=false -out=tfplan
+        run: terraform plan 
 
       - name: Terraform Apply
-        run: terraform apply -input=false -auto-approve tfplan
+        run: terraform apply  -auto-approve tfplan
  
