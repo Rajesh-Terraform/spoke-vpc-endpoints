@@ -27,5 +27,4 @@ output "s3_endpoint_id" {
 output "github_actions_role_arn" {
   description = "IAM role used by GitHub Actions"
   value       = aws_iam_role.github_actions.arn
-} 
- 
+}  

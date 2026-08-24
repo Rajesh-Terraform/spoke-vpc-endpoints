@@ -16,4 +16,4 @@ locals {
     Environment = var.environment
     ManagedBy   = "Terraform"
   }
-} 
+}  
