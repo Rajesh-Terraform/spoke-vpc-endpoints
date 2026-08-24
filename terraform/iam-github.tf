@@ -2,21 +2,11 @@ data "tls_certificate" "github" {
   url = "https://token.actions.githubusercontent.com"
 }
 
-resource "aws_iam_openid_connect_provider" "github" {
+data "aws_iam_openid_connect_provider" "github" {
   url = "https://token.actions.githubusercontent.com"
-
-  client_id_list = [
-    "sts.amazonaws.com"
-  ]
-
-  thumbprint_list = [
-    data.tls_certificate.github.certificates[0].sha1_fingerprint
-  ]
-
-  tags = {
-    Name = "github-actions-oidc"
-  }
 }
+
+data "aws_caller_identity" "current" {}
 
 data "aws_iam_policy_document" "github_actions_assume_role" {
   statement {
@@ -30,7 +20,7 @@ data "aws_iam_policy_document" "github_actions_assume_role" {
       type = "Federated"
 
       identifiers = [
-        aws_iam_openid_connect_provider.github.arn
+        data.aws_iam_openid_connect_provider.github.arn
       ]
     }
 
@@ -60,7 +50,9 @@ resource "aws_iam_role" "github_actions" {
   assume_role_policy = data.aws_iam_policy_document.github_actions_assume_role.json
 
   tags = {
-    Name = "${var.project_name}-github-actions"
+    Name        = "${var.project_name}-github-actions"
+    Project     = var.project_name
+    Environment = var.environment
   }
 }
 
@@ -75,7 +67,9 @@ data "aws_iam_policy_document" "terraform" {
       "kms:*"
     ]
 
-    resources = ["*"]
+    resources = [
+      "*"
+    ]
   }
 }
 
@@ -86,4 +80,3 @@ resource "aws_iam_role_policy" "terraform" {
 
   policy = data.aws_iam_policy_document.terraform.json
 }
-  
